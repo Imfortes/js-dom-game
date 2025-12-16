@@ -1,0 +1,42 @@
+body {
+    color: #999;
+}
+
+.container {
+  max-width: 1800px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+#header {
+  margin-bottom: 75px;
+}
+
+#header img {
+  max-height: 50px;
+}
+
+.board {
+  border: 1px solid gray;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  width: min(400px, 90vw);
+  height: min(400px, 90vw);
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+}
+
+.hole {
+  border: 1px solid darkgrey;
+  max-width: 100px;
+  max-height: 100px;
+  width: 100%;
+  height: 100%;
+}
+
+#app img {
+  max-width: 100%;
+  height: auto;
+}
