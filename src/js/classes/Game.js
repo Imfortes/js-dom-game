@@ -1,6 +1,6 @@
-import Timer from './Timer'
-import Board from './Board'
-import Creature from './Creature'
+import Timer from "./Timer";
+import Board from "./Board";
+import Creature from "./Creature";
 
 export default class Game {
   constructor() {
@@ -14,18 +14,18 @@ export default class Game {
   }
 
   createUI() {
-    const app = document.getElementById('app');
+    const app = document.getElementById("app");
 
-    const hud = document.createElement('div');
-    hud.className = 'game-hud';
+    const hud = document.createElement("div");
+    hud.className = "game-hud";
 
-    this.scoreDisplay = document.createElement('div');
-    this.scoreDisplay.className = 'score';
-    this.scoreDisplay.textContent = 'Счёт: 0';
+    this.scoreDisplay = document.createElement("div");
+    this.scoreDisplay.className = "score";
+    this.scoreDisplay.textContent = "Счёт: 0";
 
-    this.timeDisplay = document.createElement('div');
-    this.timeDisplay.className = 'timer';
-    this.timeDisplay.textContent = 'Время: 60';
+    this.timeDisplay = document.createElement("div");
+    this.timeDisplay.className = "timer";
+    this.timeDisplay.textContent = "Время: 60";
 
     hud.appendChild(this.scoreDisplay);
     hud.appendChild(this.timeDisplay);
@@ -45,28 +45,27 @@ export default class Game {
   }
 
   getRandomHole() {
-    const holes = document.querySelectorAll('.hole');
+    const holes = document.querySelectorAll(".hole");
     const randomIndex = Math.floor(Math.random() * holes.length);
     return holes[randomIndex];
   }
 
   isHoleWithCreature(holeElement) {
-    return holeElement.querySelector('.creature') !== null;
+    return holeElement.querySelector(".creature") !== null;
   }
 
   getRandomEmptyHole() {
-    const holes = Array.from(document.querySelectorAll('.hole'));
-    const emptyHoles = holes.filter(hole => !this.isHoleWithCreature(hole));
+    const holes = Array.from(document.querySelectorAll(".hole"));
+    const emptyHoles = holes.filter((hole) => !this.isHoleWithCreature(hole));
     if (emptyHoles.length === 0) {
       return holes[Math.floor(Math.random() * holes.length)];
     }
     return emptyHoles[Math.floor(Math.random() * emptyHoles.length)];
   }
 
-
   startGame() {
-    const app = document.getElementById('app');
-    app.innerHTML = '';
+    const app = document.getElementById("app");
+    app.innerHTML = "";
 
     this.createUI();
 
@@ -112,9 +111,9 @@ export default class Game {
     if (this.activeCreature && this.activeCreature.isVisible()) {
       this.activeCreature.hideElement();
       this.score += 10;
-      console.log('Попадание! Счёт:', this.score);
+      console.log("Попадание! Счёт:", this.score);
 
-      this.updateScoreUI()
+      this.updateScoreUI();
 
       // this.spawnRandomCreature();
     }
@@ -129,6 +128,4 @@ export default class Game {
     }
     alert(`Игра окончена! Ваш счёт: ${this.score}`);
   }
-
-
 }

@@ -1,26 +1,25 @@
+import Game from "./classes/Game.js";
 
-import Game from './classes/Game.js';
-
-describe('Game', () => {
+describe("Game", () => {
   beforeEach(() => {
-    const appDiv = document.createElement('div');
-    appDiv.id = 'app';
+    const appDiv = document.createElement("div");
+    appDiv.id = "app";
     document.body.appendChild(appDiv);
   });
 
   afterEach(() => {
-    document.body.innerHTML = '';
+    document.body.innerHTML = "";
   });
 
-  test('should create board with 16 holes', () => {
+  test("should create board with 16 holes", () => {
     const game = new Game();
     game.startGame();
-    expect(document.querySelectorAll('.hole').length).toBe(16);
+    expect(document.querySelectorAll(".hole").length).toBe(16);
   });
 
-  test('should spawn creature', () => {
+  test("should spawn creature", () => {
     const game = new Game();
     game.startGame();
-    expect(document.querySelector('.creature')).not.toBeNull();
+    expect(document.querySelector(".creature")).not.toBeNull();
   });
 });
