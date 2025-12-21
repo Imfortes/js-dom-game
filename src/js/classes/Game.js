@@ -28,7 +28,7 @@ export default class Game {
     // Элемент таймера
     this.timeDisplay = document.createElement('div');
     this.timeDisplay.className = 'timer';
-    this.timeDisplay.textContent = 'Время: 120';
+    this.timeDisplay.textContent = 'Время: 60';
 
     hud.appendChild(this.scoreDisplay);
     hud.appendChild(this.timeDisplay);
@@ -86,7 +86,7 @@ export default class Game {
 
     // 4. Запуск таймера
     this.timer = new Timer();
-    this.timer.start(120);
+    this.timer.start(60);
 
     // При каждом тике — обновляем UI
     this.timer.onTick((remaining) => {
@@ -124,7 +124,9 @@ export default class Game {
       this.score += 10;
       console.log('Попадание! Счёт:', this.score);
 
-      this.spawnRandomCreature();
+      this.updateScoreUI()
+
+      // this.spawnRandomCreature();
     }
   }
 
