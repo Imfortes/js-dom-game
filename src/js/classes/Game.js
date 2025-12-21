@@ -16,16 +16,13 @@ export default class Game {
   createUI() {
     const app = document.getElementById('app');
 
-    // Контейнер для HUD (Heads-Up Display)
     const hud = document.createElement('div');
     hud.className = 'game-hud';
 
-    // Элемент счёта
     this.scoreDisplay = document.createElement('div');
     this.scoreDisplay.className = 'score';
     this.scoreDisplay.textContent = 'Счёт: 0';
 
-    // Элемент таймера
     this.timeDisplay = document.createElement('div');
     this.timeDisplay.className = 'timer';
     this.timeDisplay.textContent = 'Время: 60';
@@ -69,36 +66,29 @@ export default class Game {
 
   startGame() {
     const app = document.getElementById('app');
-    app.innerHTML = ''; // очистка
+    app.innerHTML = '';
 
-    // 1. Создаём UI
     this.createUI();
 
-    // 2. Создаём игровое поле
     this.board = new Board();
     const boardEl = this.board.create();
     app.appendChild(boardEl);
 
-    // 3. Инициализация существа
     this.activeCreature = new Creature();
     const firstHole = this.getRandomEmptyHole();
     this.activeCreature.insertElement(firstHole);
 
-    // 4. Запуск таймера
     this.timer = new Timer();
     this.timer.start(60);
 
-    // При каждом тике — обновляем UI
     this.timer.onTick((remaining) => {
       this.updateTimeUI(remaining);
     });
 
-    // По окончании — завершить игру
     this.timer.onTimeUp(() => {
       this.endGame();
     });
 
-    // 5. Запуск спавна
     this.spawnInterval = setInterval(() => {
       this.spawnRandomCreature();
     }, 2000);
