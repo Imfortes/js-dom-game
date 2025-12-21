@@ -1,5 +1,5 @@
 export default class Creature {
-  constructor(count = 1) {
+  constructor() {
     this.element = null;
     this.currentHole = null;
   }
