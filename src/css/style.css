@@ -17,6 +17,15 @@ body {
   max-height: 50px;
 }
 
+.game-hud {
+  width: min(400px, 90vw);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
 .board {
   border: 1px solid gray;
   display: grid;

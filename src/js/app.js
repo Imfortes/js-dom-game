@@ -16,4 +16,11 @@ import Game from "./classes/Game.js";
 let game = new Game();
 game.startGame()
 
-game.updateBoard()
+// game.updateBoard()
+
+
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('creature')) {
+    game.handleClick();
+  }
+});
