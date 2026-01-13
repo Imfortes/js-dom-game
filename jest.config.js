@@ -16,6 +16,10 @@ const config = {
     "^.+\\.js$": "babel-jest",
   },
 
+  moduleNameMapper: {
+    "\\.(jpg|jpeg|png|gif|svg)$": "<rootDir>/__mocks__/fileMock.js",
+  },
+
   // Дополнительно: если хочешь видеть покрытие кода
   collectCoverageFrom: [
     "src/js/classes/**/*.js",
