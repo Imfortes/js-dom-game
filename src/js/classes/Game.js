@@ -137,8 +137,6 @@ export default class Game {
       console.log("Попадание! Счёт:", this.score);
 
       this.updateScoreUI();
-    } else {
-
     }
   }
 
@@ -155,7 +153,7 @@ export default class Game {
     this.updateMissesUI();
 
     if (this.misses >= 5) {
-      this.endGame('misses');
+      this.endGame();
     }
   }
 
