@@ -1,12 +1,14 @@
 export default class Board {
-  constructor() {}
+  constructor(size = 4) {
+    this.size = size;
+  }
 
-  create(size = 4) {
+  create() {
     const boardEl = document.createElement("div");
     boardEl.className = "board";
 
-    for (let i = 0; i < size; i++) {
-      for (let j = 0; j < size; j++) {
+    for (let i = 0; i < this.size; i++) {
+      for (let j = 0; j < this.size; j++) {
         const holeEl = document.createElement("div");
         holeEl.className = "hole";
         holeEl.dataset.x = j;

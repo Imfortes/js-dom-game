@@ -6,6 +6,7 @@ export default class Game {
   constructor() {
     this.activeCreature = null;
     this.score = 0;
+    this.misses = 0;
     this.timer = null;
     this.board = null;
     this.spawnInterval = null;
@@ -23,13 +24,18 @@ export default class Game {
     this.scoreDisplay.className = "score";
     this.scoreDisplay.textContent = "Счёт: 0";
 
+    this.missesDisplay = document.createElement("div");
+    this.missesDisplay.className = "misses";
+    this.missesDisplay.textContent = "Промахи: 0";
+
     this.timeDisplay = document.createElement("div");
     this.timeDisplay.className = "timer";
     this.timeDisplay.textContent = "Время: 60";
 
-    hud.appendChild(this.scoreDisplay);
-    hud.appendChild(this.timeDisplay);
-    app.appendChild(hud);
+    hud.append(this.scoreDisplay);
+    hud.append(this.missesDisplay);
+    hud.append(this.timeDisplay);
+    app.append(hud);
   }
 
   updateScoreUI() {
@@ -38,16 +44,16 @@ export default class Game {
     }
   }
 
+  updateMissesUI() {
+    if (this.missesDisplay) {
+      this.missesDisplay.textContent = `Промахи: ${this.misses}`;
+    }
+  }
+
   updateTimeUI(seconds) {
     if (this.timeDisplay) {
       this.timeDisplay.textContent = `Время: ${seconds}`;
     }
-  }
-
-  getRandomHole() {
-    const holes = document.querySelectorAll(".hole");
-    const randomIndex = Math.floor(Math.random() * holes.length);
-    return holes[randomIndex];
   }
 
   isHoleWithCreature(holeElement) {
@@ -71,7 +77,14 @@ export default class Game {
 
     this.board = new Board();
     const boardEl = this.board.create();
-    app.appendChild(boardEl);
+
+    boardEl.addEventListener('click', (e) => {
+      if (e.target.classList.contains('creature')) {
+        this.handleHit();
+      }
+    });
+
+    app.append(boardEl);
 
     this.activeCreature = new Creature();
     const firstHole = this.getRandomEmptyHole();
@@ -90,32 +103,59 @@ export default class Game {
 
     this.spawnInterval = setInterval(() => {
       this.spawnRandomCreature();
-    }, 2000);
+    }, 1000);
   }
 
   spawnRandomCreature() {
-    this.activeCreature.hideElement();
+    if (this.activeCreature) {
+      if (this.activeCreature.isVisible() && !this.activeCreature.wasHit) {
+        this.registerMiss();
+      }
+    }
+
+    if (!this.activeCreature) {
+      this.activeCreature = new Creature();
+    }
 
     const newHole = this.getRandomEmptyHole();
-
     this.activeCreature.insertElement(newHole);
 
     setTimeout(() => {
       if (this.activeCreature && this.activeCreature.currentHole === newHole) {
+        if (!this.activeCreature.wasHit) {
+          this.registerMiss();
+        }
         this.activeCreature.hideElement();
       }
-    }, 1500);
+    }, 1000);
   }
 
   handleClick() {
     if (this.activeCreature && this.activeCreature.isVisible()) {
       this.activeCreature.hideElement();
-      this.score += 10;
+      this.score += 1;
       console.log("Попадание! Счёт:", this.score);
 
       this.updateScoreUI();
+    } else {
 
-      // this.spawnRandomCreature();
+    }
+  }
+
+  handleHit() {
+    if (this.activeCreature && this.activeCreature.isVisible()) {
+      this.activeCreature.hit();
+      this.score += 1;
+      this.updateScoreUI();
+    }
+  }
+
+  registerMiss() {
+    this.misses += 1;
+    this.updateMissesUI();
+
+    if (this.misses >= 5) {
+      this.endGame('misses');
     }
   }
 
@@ -126,6 +166,6 @@ export default class Game {
     if (this.timer) {
       this.timer.stop();
     }
-    alert(`Игра окончена! Ваш счёт: ${this.score}`);
+    alert(`Игра окончена! Ваш счёт: ${this.score}! Количество промахов: ${this.misses}`);
   }
 }

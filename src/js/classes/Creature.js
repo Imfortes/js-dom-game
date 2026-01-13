@@ -1,14 +1,16 @@
+import goblin from "../../img/goblin.png";
+
 export default class Creature {
   constructor() {
     this.element = null;
     this.currentHole = null;
+    this.wasHit = false;
   }
 
   createElement() {
     if (!this.element) {
       const img = document.createElement("img");
-      img.src =
-        "https://raw.githubusercontent.com/netology-code/ahj-homeworks/AHJ-50/dom/pic/goblin.png";
+      img.src = goblin;
       img.alt = "Goblin";
       img.classList.add("creature");
       this.element = img;
@@ -24,16 +26,22 @@ export default class Creature {
       this.hideElement();
     }
 
-    holeElement.appendChild(this.element);
+    holeElement.append(this.element);
 
     this.currentHole = holeElement;
     this.element.style.display = "block";
+    this.wasHit = false;
   }
 
   hideElement() {
     if (this.element) {
       this.element.style.display = "none";
     }
+  }
+
+  hit() {
+    this.wasHit = true;
+    this.hideElement();
   }
 
   isVisible() {
